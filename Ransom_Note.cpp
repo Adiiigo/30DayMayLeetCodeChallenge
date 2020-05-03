@@ -1,4 +1,6 @@
-Given an arbitrary ransom note string and another string containing letters from all the magazines, write a function that will return true if the ransom note can be constructed from the magazines ; otherwise, it will return false.
+Given an arbitrary ransom note string and another string containing letters from all the magazines, 
+write a function that will return true if the ransom note can be constructed from the magazines ; 
+otherwise, it will return false.
 
 Each letter in the magazine string can only be used once in your ransom note.
 
@@ -9,7 +11,7 @@ canConstruct("a", "b") -> false
 canConstruct("aa", "ab") -> false
 canConstruct("aa", "aab") -> true
 
-Solution(by Me):
+-Solution(by Me):
 
 class Solution {
 public:
@@ -55,5 +57,37 @@ public:
         }
         
         return false ;    
+    }
+};
+
+-Solution(by dasoe)
+    class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        
+        int rSize = ransomNote.size() ;
+        int mSize = magazine.size() ;
+        int inventory[26] = {0};
+        
+        if(mSize == 0 && rSize == 0) return true ;
+        if( mSize < rSize) return false ;
+        
+        int j = 0 ;// magazine index 
+        for(int i = 0 ; i < rSize ; i++){
+            char temp = ransomNote[i] ;
+            if(inventory[temp-'a'] != 0){ //letter exists
+                inventory[temp-'a']-- ;
+            }
+            else{
+                while(true){
+                    char letter = magazine[j] ;
+                    j++;
+                    if(letter == temp) break;
+                    inventory[letter - 'a' ]++ ;
+                    if(j == mSize) return false ;
+                }
+            }
+        }
+        return true; 
     }
 };
