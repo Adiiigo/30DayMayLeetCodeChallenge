@@ -13,6 +13,7 @@ Input: [2,2,1,1,1,2,2]
 Output: 2
 
 Solution:
+(by Me)
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
@@ -55,5 +56,38 @@ public:
             }
         }
         return answer ;
+    }
+};
+
+
+Solution 2(Boyer-Moore Voting Algorithm):
+(by daose)
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        
+        //3,2,3 //3,3,4
+        
+        int singles = 0 ;
+        int candidate = -1 ;
+        
+        for(int num : nums){
+            
+            if(singles == 0 ){
+                candidate = num;
+            }
+
+            singles += num==candidate ? +1 : -1 ;
+            
+            // if(num == candidate){
+            //     singles++ ;
+            // }
+            // else{
+            //     singles--; 
+            // }
+            
+        }
+        return candidate ;
     }
 };
