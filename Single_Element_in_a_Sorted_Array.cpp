@@ -79,3 +79,67 @@ Space Complexity(Extra) : O(1) ;
 Approach 2 ends //
 
 Approach 3:
+-> We are aware that there are 2n+1 elements 
+-> comparing the positions of 2n+1 elements with their original positions
+
+EG :
+Index = 0 1 2 3 4 5 6 7 8 9
+Input = 1 1 2 3 3 4 4 8 8 
+Org   = 1 1 2 2 3 3 4 4 8 8
+    
+Index = 0 1 2 3 4  5  6  7
+Input = 3 3 7 7 10 11 11
+Org   = 3 3 7 7 10 10 11 11
+    
+here every "even" index => start of the pair
+            "odd" index => completion of the pair
+            
+ Terminating condition is when left == right, loop breaks
+ 
+ class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        
+        int left = 0 ;
+        int right = nums.size()-1 ;
+        
+        int mid = 0 ; 
+        
+        while(left < right){
+            
+            mid = left + (right-left)/2 ;
+            
+            //middle is even
+            if(mid % 2 == 0){ //can also do (mid & 1 == 0)
+                //mid+1 should be the partner
+                if( nums[mid] != nums[mid+1] ){
+                    //problem is there in the left part of the array
+                    right = mid ;
+                }
+                else{ //looking into the original array, we will skip the pair and move to the next pair
+                    left = mid + 2 ;
+                }
+            }
+            else{ //mid i's odd
+                //mid-1 should be the partner
+                if(nums[mid] != nums[mid-1]){ // skip the start of the pair and move towards the front
+                    right = mid - 1 ;
+                }
+                else{ //skip the end of the pair and moves towarsd the right
+                    left = mid + 1 ;
+                }
+            }            
+        }
+        
+        //left == right -> terminating condition
+        return nums[left] ;
+    }
+};
+
+Time Complexity - O(logn)
+Space Complexity(Extra) - O(1)
+    
+Approach 3 ends //   
+
+Youtube link referred:
+https://www.youtube.com/watch?v=aFXhs190zeg
